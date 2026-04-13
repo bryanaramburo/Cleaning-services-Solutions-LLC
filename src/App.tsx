@@ -107,7 +107,7 @@ const SiteImage = ({ src, alt, className = "" }: { src: string; alt: string; cla
 // Logo component — shows icon fallback until logo.png is uploaded
 const Logo = ({ size = "md", dark = false }: { size?: "sm" | "md" | "lg"; dark?: boolean }) => {
   const [errored, setErrored] = React.useState(false);
-  const heights: Record<string, string> = { sm: "h-14", md: "h-20", lg: "h-24" };
+  const heights: Record<string, string> = { sm: "h-16", md: "h-24", lg: "h-28" };
 
   if (errored) {
     return (
