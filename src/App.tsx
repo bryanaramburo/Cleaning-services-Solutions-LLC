@@ -107,7 +107,7 @@ const SiteImage = ({ src, alt, className = "" }: { src: string; alt: string; cla
 // Logo component — shows icon fallback until logo.png is uploaded
 const Logo = ({ size = "md", dark = false }: { size?: "sm" | "md" | "lg"; dark?: boolean }) => {
   const [errored, setErrored] = React.useState(false);
-  const heights: Record<string, string> = { sm: "h-12", md: "h-16", lg: "h-20" };
+  const heights: Record<string, string> = { sm: "h-14", md: "h-20", lg: "h-24" };
 
   if (errored) {
     return (
@@ -301,7 +301,7 @@ export default function App() {
               Your Home Deserves a <span className="text-brand-blue">Spotless Clean.</span>
             </h1>
             <p className="text-lg md:text-xl text-brand-navy/80 mb-10 leading-relaxed max-w-xl">
-              Professional residential cleaning across North Georgia. We bring everything needed to make your home shine—from Gainesville to Atlanta.
+              Professional residential cleaning across North Georgia. We bring everything needed to make your home shine! Serving Gainesville & surrounding areas.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <a href="tel:7703770635" className="bg-brand-blue text-white px-8 py-4 rounded-full font-bold text-lg flex items-center justify-center gap-2 hover:bg-brand-green hover:text-brand-navy transition-all shadow-xl shadow-brand-blue/20">
