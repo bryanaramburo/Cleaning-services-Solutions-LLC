@@ -20,10 +20,10 @@ import {
   X,
   Star,
   CheckCircle2,
-  Utensils,
-  Bath,
-  Bed,
-  Home,
+  CalendarCheck,
+  Sun,
+  HardHat,
+  ClipboardList,
   ArrowRight,
   Truck,
   Languages
@@ -179,6 +179,7 @@ const SectionHeading = ({ title, subtitle, light = false }: { title: string; sub
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [selectedService, setSelectedService] = useState("");
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -196,12 +197,42 @@ export default function App() {
   };
 
   const services = [
-    { title: "Kitchen",                icon: <Utensils className="text-brand-blue" size={32} />, desc: "A deep, hygienic clean for the heart of your home. We sanitize countertops, scrub sinks, and clean all appliance exteriors until they sparkle." },
-    { title: "Bathrooms",              icon: <Bath     className="text-brand-blue" size={32} />, desc: "Complete disinfection of showers, tubs, toilets, and vanities. We remove soap scum and leave your mirrors and fixtures streak-free." },
-    { title: "Bedrooms",               icon: <Bed      className="text-brand-blue" size={32} />, desc: "Creating a serene sanctuary for rest. We dust all surfaces, vacuum carpets, and ensure every corner is free of allergens and dust." },
-    { title: "Living Room",            icon: <Home     className="text-brand-blue" size={32} />, desc: "The perfect space for family time. We meticulously dust furniture, clean baseboards, and refresh floors for a welcoming atmosphere." },
-    { title: "Full Home Cleaning",     icon: <Sparkles className="text-brand-blue" size={32} />, desc: "Our comprehensive one-time deep clean. We bring all supplies to transform your entire residence into a spotless, healthy environment." },
-    { title: "Moving-Related Cleaning",icon: <Truck    className="text-brand-blue" size={32} />, desc: "Perfect for move-ins or move-outs. We provide a deep, comprehensive clean to ensure your new home is ready for you, or your old home is spotless for the next residents." },
+    {
+      title: "One-Time Deep Clean",
+      tagline: "The Ultimate Reset for Your Home",
+      icon: <Sparkles className="text-brand-blue" size={32} />,
+      desc: "For homes that need a thorough, top-to-bottom clean. Our deep clean goes beyond the surface to tackle built-up grime, dust, and dirt in every corner. Perfect for first-time clients or anyone ready for a fresh start."
+    },
+    {
+      title: "Regular Home Maintenance",
+      tagline: "A Clean Home, Every Single Week",
+      icon: <CalendarCheck className="text-brand-blue" size={32} />,
+      desc: "Keep your home looking its best on a schedule that works for you. Available weekly, bi-weekly, or monthly. After your initial deep clean, our maintenance visits keep everything fresh and consistent so you never have to worry about it."
+    },
+    {
+      title: "Move-In / Move-Out Clean",
+      tagline: "Leave It Spotless. Start Fresh.",
+      icon: <Truck className="text-brand-blue" size={32} />,
+      desc: "Moving is stressful enough — let us handle the cleaning. Whether you're leaving a home behind or stepping into a new one, we make sure every inch is spotless. Great for renters, homeowners, landlords, and property managers."
+    },
+    {
+      title: "Seasonal Deep Clean",
+      tagline: "Spring Cleaning, Holiday Prep, or Anytime Reset",
+      icon: <Sun className="text-brand-blue" size={32} />,
+      desc: "Some messes need more than a regular clean. Our seasonal package is perfect for spring cleaning, getting ready for the holidays, or any time your home needs extra attention. Book it once or add it on top of your regular schedule."
+    },
+    {
+      title: "Post-Construction / Renovation Clean",
+      tagline: "We Handle the Mess So You Can Enjoy the Results",
+      icon: <HardHat className="text-brand-blue" size={32} />,
+      desc: "Remodeling leaves behind dust, debris, and residue that regular cleaning can't handle. Our post-construction clean gets your newly renovated space ready to live in. Safe, thorough, and detail-oriented."
+    },
+    {
+      title: "Custom In-Person Quote",
+      tagline: "Every Home Is Different — Let's Build Your Perfect Clean",
+      icon: <ClipboardList className="text-brand-blue" size={32} />,
+      desc: "Not sure which package is right for you? Maria will come to your home, assess your space, and put together a personalized cleaning plan that fits your needs and budget. No pressure, no guessing — just an honest quote tailored to your home."
+    },
   ];
 
   const trustPoints = [
@@ -216,7 +247,10 @@ export default function App() {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const data = Object.fromEntries(formData.entries());
-    const message = `New Quote Request:\nName: ${data.name}\nPhone: ${data.phone}\nEmail: ${data.email}\nAddress: ${data.address}\nService: ${data.service}`;
+    let message = `New Quote Request:\nName: ${data.name}\nPhone: ${data.phone}\nEmail: ${data.email}\nAddress: ${data.address}\nService: ${data.service}`;
+    if (data.frequency) {
+      message += `\nFrequency: ${data.frequency}`;
+    }
     window.location.href = `sms:7703770635?body=${encodeURIComponent(message)}`;
   };
 
@@ -330,7 +364,7 @@ export default function App() {
       {/* Services Section */}
       <section id="services" className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-6">
-          <SectionHeading title="Our Cleaning Services" subtitle="What We Clean" />
+          <SectionHeading title="Our Cleaning Packages" subtitle="What We Offer" />
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service, idx) => (
               <motion.div
@@ -339,21 +373,31 @@ export default function App() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: idx * 0.1 }}
-                className="group bg-white p-8 rounded-3xl border-l-4 border-transparent border-y border-r border-gray-100 shadow-sm hover:shadow-xl hover:border-l-brand-blue hover:bg-brand-mint/10 hover:-translate-y-1 transition-all duration-300 relative overflow-hidden"
+                className="group bg-white p-8 rounded-3xl border-l-4 border-transparent border-y border-r border-gray-100 shadow-sm hover:shadow-xl hover:border-l-brand-blue hover:bg-brand-mint/10 hover:-translate-y-1 transition-all duration-300 relative overflow-hidden flex flex-col h-full"
               >
                 <div className="absolute top-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity">
                   <Sparkles className="text-brand-green/30" size={40} />
                 </div>
-                <div className="bg-brand-mint/30 w-16 h-16 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-brand-mint/50 transition-colors">
+                <div className="bg-brand-mint/30 w-16 h-16 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-brand-mint/50 transition-colors shrink-0">
                   {service.icon}
                 </div>
-                <h3 className="text-2xl font-display font-bold mb-4 text-brand-navy">{service.title}</h3>
-                <p className="text-brand-navy/70 leading-relaxed">{service.desc}</p>
+                <h3 className="text-2xl font-display font-bold mb-1 text-brand-navy">{service.title}</h3>
+                <p className="text-brand-blue font-bold text-sm mb-4 uppercase tracking-wider">{service.tagline}</p>
+                <p className="text-brand-navy/70 leading-relaxed mb-8">{service.desc}</p>
+                <a
+                  href="#contact"
+                  className="mt-auto w-full bg-brand-blue text-white py-4 rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-brand-navy transition-all shadow-lg shadow-brand-blue/10 group/btn"
+                >
+                  Get a Quote
+                  <ArrowRight size={20} className="group-hover/btn:translate-x-1 transition-transform" />
+                </a>
               </motion.div>
             ))}
           </div>
           <div className="mt-16 text-center">
-            <p className="text-brand-navy/60 font-medium italic">* We specialize in one-time deep cleans and bring all necessary supplies and equipment.</p>
+            <p className="text-brand-navy/60 font-medium italic">
+              * All packages include our satisfaction guarantee. We bring all supplies and equipment — you don't need to provide a thing.
+            </p>
           </div>
         </div>
       </section>
@@ -513,17 +557,46 @@ export default function App() {
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-bold text-brand-navy uppercase tracking-wide">Service Requested</label>
-                    <select required name="service" className="w-full px-6 py-4 rounded-2xl border border-gray-200 focus:border-brand-blue focus:ring-4 focus:ring-brand-blue/10 outline-none transition-all bg-white appearance-none min-h-[56px]">
+                    <select
+                      required
+                      name="service"
+                      value={selectedService}
+                      onChange={(e) => setSelectedService(e.target.value)}
+                      className="w-full px-6 py-4 rounded-2xl border border-gray-200 focus:border-brand-blue focus:ring-4 focus:ring-brand-blue/10 outline-none transition-all bg-white appearance-none min-h-[56px]"
+                    >
                       <option value="">Select a service...</option>
-                      <option>Full Home Cleaning</option>
-                      <option>Moving-Related Cleaning</option>
-                      <option>Kitchen Only</option>
-                      <option>Bathrooms Only</option>
-                      <option>Bedrooms Only</option>
-                      <option>Living Room Only</option>
+                      <option>One-Time Deep Clean</option>
+                      <option>Regular Home Maintenance</option>
+                      <option>Move-In / Move-Out Clean</option>
+                      <option>Seasonal Deep Clean</option>
+                      <option>Post-Construction / Renovation Clean</option>
+                      <option>Custom In-Person Quote</option>
                     </select>
                   </div>
                 </div>
+
+                {/* Frequency dropdown — only shows when a service is selected and it's not a custom quote */}
+                {selectedService && selectedService !== "Custom In-Person Quote" && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    className="space-y-2 overflow-hidden"
+                  >
+                    <label className="text-sm font-bold text-brand-navy uppercase tracking-wide">Cleaning Frequency</label>
+                    <select
+                      required
+                      name="frequency"
+                      className="w-full px-6 py-4 rounded-2xl border border-gray-200 focus:border-brand-blue focus:ring-4 focus:ring-brand-blue/10 outline-none transition-all bg-white appearance-none min-h-[56px]"
+                    >
+                      <option value="">Select a frequency...</option>
+                      <option>One-Time Only</option>
+                      <option>Weekly</option>
+                      <option>Bi-Weekly (Every 2 Weeks)</option>
+                      <option>Monthly</option>
+                    </select>
+                  </motion.div>
+                )}
+
                 <button type="submit" className="w-full bg-brand-blue text-white py-5 rounded-2xl font-bold text-xl flex items-center justify-center gap-3 hover:bg-brand-navy transition-all shadow-xl shadow-brand-blue/20 group">
                   <MessageSquare size={24} /> Send Quote Request via SMS <ChevronRight className="group-hover:translate-x-1 transition-transform" />
                 </button>
