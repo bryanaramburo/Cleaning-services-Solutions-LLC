@@ -528,7 +528,7 @@ export default function App() {
                   <div>
                     <h4 className="font-display font-bold text-xl text-brand-navy mb-1">Business Hours</h4>
                     <p className="text-lg text-brand-navy/70">{businessInfo.hours}</p>
-                    <p className="text-brand-navy/50 font-medium">Closed Saturday & Sunday</p>
+                    <p className="text-brand-navy/50 font-medium">Closed Sunday</p>
                   </div>
                 </div>
               </div>
