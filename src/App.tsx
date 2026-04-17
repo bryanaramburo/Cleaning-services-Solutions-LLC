@@ -192,7 +192,7 @@ export default function App() {
     phone: "(770) 377-0635",
     email: "24cleaningcolutions@gmail.com",
     location: "Gainesville, GA",
-    hours: "Mon – Fri, 8:00 AM – 5:00 PM",
+    hours: "Mon – Sat, 8:00 AM – 5:00 PM",
     serviceAreas: ["Atlanta", "Braselton", "Buford", "Gainesville", "Oakwood", "Jefferson"],
   };
 
